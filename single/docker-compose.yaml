@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+
+ cockroach-db-single-node:
+   image: cockroachdb/cockroach:v20.2.10
+   ports:
+     - "26257:26257"
+     - "8080:8080"
+   command: start-single-node --insecure
+   volumes:
+     - "./data/cockroach-data/crdb:/cockroach/cockroach-data"
