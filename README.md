@@ -4,6 +4,7 @@
 ```sh
 cd ./single
 docker compose up
+./single/sql.sh
 ```
 * [Cluster](./cluster/docker-compose.yaml)
 ```sh
