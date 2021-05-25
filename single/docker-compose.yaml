@@ -3,6 +3,7 @@ version: '3.8'
 services:
 
  cockroach-db-single-node:
+   container_name: cockroach-single
    image: cockroachdb/cockroach:v20.2.10
    ports:
      - "26257:26257"

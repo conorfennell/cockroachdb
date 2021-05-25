@@ -1,42 +1,47 @@
 version: "3.8"
 services:
    
-    node_1:
-        container_name: node_1
+    roach1:
+        container_name: cockroachdb1
         image: cockroachdb/cockroach:v20.2.10
         volumes:
-           - ./data/node_1:/cockroach/cockroach-data
-        command: start --insecure --join=node_1,node_2,node_3 --listen-addr=node_1
+           - volume1:/cockroach/cockroach-data
+        command: start --insecure --advertise-addr=roach1:26257 --join=roach2:26257,roach3:26257
         ports:
-           - "26257:26257"
-           - "8080:8080"
+           - 26257:26257
+           - 8080:8080
         networks:
-            cockroachdb_net:
-                aliases:
-                   - node_1
+            - roachnet
 
-    node_2:
-        container_name: node_2
+    roach2:
+        container_name: cockroachdb2
+        restart: always
         image: cockroachdb/cockroach:v20.2.10
         volumes:
-           - ./data/node_2:/cockroach/cockroach-data
-        command: start --insecure --join=node_1,node_2,node_3 --listen-addr=node_2
+           - volume2:/cockroach/cockroach-data
+        command: start --insecure --advertise-addr=roach2:26257 --join=roach1:26257,node_3:26257
+        ports:
+            - 26258:26257
+            - 8088:8080
         networks:
-            cockroachdb_net:
-                aliases:
-                   - node_2
+            - roachnet
     
-    node_3:
-        container_name: node_3
+    roach3:
+        container_name: cockroachdb3
+        restart: always
         image: cockroachdb/cockroach:v20.2.10
         volumes:
-            - ./data/node_3:/cockroach/cockroach-data
-        command: start --insecure --join=node_1,node_2,node_3 --listen-addr=node_3
+            - volume3:/cockroach/cockroach-data
+        command: start --insecure --advertise-addr=roach3:26257 --join=roach1:26257,roach2:26257
+        ports:
+            - 26259:26257
+            - 8089:8080
         networks:
-            cockroachdb_net:
-                aliases:
-                    - node_3
+            - roachnet
 
 networks:
-    cockroachdb_net:
-        driver: bridge
+    roachnet:
+volumes:
+    volume1:
+    volume2:
+    volume3:

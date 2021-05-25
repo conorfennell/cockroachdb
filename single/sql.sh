@@ -1,1 +1,1 @@
-docker exec -it single_cockroach-db-single-node_1 bash -c 'cockroach sql --insecure' -it
+docker exec -it cockroach-single bash -c 'cockroach sql --insecure' -it

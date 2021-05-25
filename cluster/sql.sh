@@ -1,0 +1,1 @@
+docker exec -it cockroachdb1 bash -c 'cockroach sql --insecure' -it
