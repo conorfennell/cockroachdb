@@ -39,9 +39,37 @@ services:
         networks:
             - roachnet
 
+    roach4:
+        container_name: cockroachdb4
+        restart: always
+        image: cockroachdb/cockroach:v20.2.10
+        volumes:
+            - volume4:/cockroach/cockroach-data
+        command: start --insecure --advertise-addr=roach4:26257 --join=roach1:26257,node_3:26257
+        ports:
+            - 26260:26257
+            - 8090:8080
+        networks:
+            - roachnet
+    
+    roach5:
+        container_name: cockroachdb5
+        restart: always
+        image: cockroachdb/cockroach:v20.2.10
+        volumes:
+            - volume5:/cockroach/cockroach-data
+        command: start --insecure --advertise-addr=roach5:26257 --join=roach1:26257,roach2:26257
+        ports:
+            - 26261:26257
+            - 8091:8080
+        networks:
+            - roachnet
+
 networks:
     roachnet:
 volumes:
     volume1:
     volume2:
     volume3:
+    volume4:
+    volume5:
