@@ -27,3 +27,5 @@ Start sql shell
 
 
 [Local Admin UI](http://localhost:8080)
+
+[Recommended production settings](https://www.cockroachlabs.com/docs/stable/recommended-production-settings.html)
